@@ -1,0 +1,62 @@
+{% extends "layout.html" %}  <!-- Extending the base layout template -->
+{% block content %}  <!-- Start of the content block -->
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ image_file }}">  <!-- Displaying the user's profile image -->
+        <div class="media-body">
+          <h2 class="account-heading">{{ current_user.username }}</h2>  <!-- Displaying the username -->
+          <p class="text-secondary">{{ current_user.email }}</p>  <!-- Displaying the email -->
+        </div>
+      </div>
+        <form method="POST" action=" "  enctype="multipart/form-data" >  <!-- Form for updating account info -->
+            {{ form.hidden_tag()}}  <!-- Hidden CSRF token for security -->
+            <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Account Info</legend>  <!-- Section title -->
+                    <div class="form-group">
+                        {{ form.username.label(class="form-control-label") }}  <!-- Label for username -->
+
+                           {% if form.username.errors %}  <!-- Check for username errors -->
+                               {{ form.username(class="form-control form-control-lg  is-invalid") }}  <!-- Input with error styling -->
+                               <div class="invalid-feedback">
+                                   {%  for error in form.username.errors %}  <!-- Loop through username errors -->
+                                       <span> {{ error }} </span>
+                                   {% endfor %}
+                               </div>
+                           {% else %}
+                               {{ form.username(class="form-control form-control-lg") }}  <!-- Input without error styling -->
+                            {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.email.label(class="form-control-label") }}  <!-- Label for email -->
+                            {% if form.email.errors %}  <!-- Check for email errors -->
+                               {{ form.email(class="form-control form-control-lg  is-invalid") }}  <!-- Input with error styling -->
+                               <div class="invalid-feedback">
+                                   {%  for error in form.email.errors %}  <!-- Loop through email errors -->
+                                       <span> {{ error }} </span>
+                                   {% endfor %}
+                               </div>
+                            
+                           {% else %}
+                               {{ form.email(class="form-control form-control-lg") }}  <!-- Input without error styling -->
+                           {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.picture.label() }}  <!-- Label for profile picture -->
+                        {{ form.picture(class="form-control-file") }}  <!-- File input for profile picture -->
+                        {% if form.picture.errors %}  <!-- Check for picture errors -->
+                                {% for error in form.picture.errors %}  <!-- Loop through picture errors -->
+                                    <span class="text-danger">{{ error }}</span></br>
+                                {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+            </fieldset>
+                    <div class="form-group">
+                      {{ form.submit(class="btn btn-outline-info")}}  <!-- Submit button -->
+                    </div>
+    
+        </form>
+    </div> 
+{% endblock content %}  <!-- End of the content block -->

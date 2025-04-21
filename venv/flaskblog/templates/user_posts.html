@@ -1,0 +1,28 @@
+{% extends "layout.html" %}  <!-- Extending the base layout template -->
+{% block content %}  <!-- Start of the content block -->
+  <h1 class="mb-3">Posts by {{ user.username }} ({{ posts.total }})</h1>  <!-- Displaying the username and total number of posts -->
+  {% for post in posts.items %}  <!-- Looping through each post in the paginated posts -->
+    <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">  <!-- Displaying the author's profile picture -->
+    <div class ="media-body">
+      <div class = "article-metadata">
+      <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>  <!-- Link to the author's posts -->
+      <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>  <!-- Displaying the post date -->
+      </div>
+      <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>  <!-- Link to the post details -->
+      <p class="article-content">{{ post.content }}</p>  <!-- Displaying the post content -->
+    </div>
+    </article> 
+  {% endfor %}  <!-- End of the posts loop -->
+  {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}  <!-- Looping through pagination pages -->
+     {% if page_num %}  <!-- Check if the page number exists -->
+      {% if posts.page == page_num %}  <!-- Highlight the current page -->
+      <a class="btn btn-info mb-4"  href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+      {% else %}  <!-- Link to other pages -->
+      <a class="btn btn-outline-info mb-4"  href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+     {% else %}
+      ...  <!-- Ellipsis for skipped pages -->
+     {% endif %} 
+  {% endfor %}  <!-- End of pagination loop -->
+{% endblock content %}  <!-- End of the content block -->

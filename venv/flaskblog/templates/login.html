@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag()}} <!-- CSRF protection hidden field -->
+            <fieldset class="form-group">
+                
+                <legend class="border-bottom mb-4">Log In</legend> <!-- Form title -->
+                
+                    <div class="form-group">
+                        {{ form.email.label(class="form-control-label") }} <!-- Email label -->
+                            {% if form.email.errors %}
+                               {{ form.email(class="form-control form-control-lg  is-invalid") }} <!-- Email input with error styling -->
+                               <div class="invalid-feedback">
+                                   {%  for error in form.email.errors %}
+                                       <span> {{ error }} </span> <!-- Display email errors -->
+                                   {% endfor %}
+                               </div>
+                           {% else %}
+                           
+                               {{ form.email(class="form-control form-control-lg") }} <!-- Email input without error styling -->
+
+                           {% endif %}
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.password.label(class="form-control-label") }} <!-- Password label -->
+                        {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg  is-invalid") }} <!-- Password input with error styling -->
+                        <div class="invalid-feedback">
+                            {%  for error in form.password.errors %}
+                                <span> {{ error }} </span> <!-- Display password errors -->
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                    
+                        {{ form.password(class="form-control form-control-lg") }} <!-- Password input without error styling -->
+
+                    {% endif %}
+
+                    </div>
+                    <div class="form-check">
+                        {{ form.remember(class="form-check-input")}} <!-- Remember me checkbox -->
+                        {{ form.remember.label(class="form-check-label")}} <!-- Remember me label -->
+                    </div>
+            </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-info")}} <!-- Submit button -->
+                        <small class="text-muted ml-2">
+                            <a href="{{ url_for('users.reset_request') }}">Forgot Password</a> <!-- Forgot password link -->
+                        </small>
+                    </div>
+                    
+        </form>
+    </div>
+    
+    <div class="border-top pt-3">
+        <small text-muted>
+            Need an account? <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up Now</a> <!-- Sign up link -->
+        </small>
+    </div>
+                
+           
+        
+    
+{% endblock content %}

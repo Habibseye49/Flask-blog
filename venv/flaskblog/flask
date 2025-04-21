@@ -1,0 +1,6 @@
+from flask import Flask  # Importing the Flask class from the flask module
+app = Flask(__name__)  # Creating an instance of the Flask class
+
+@app.route("/")  # Defining the route for the home page
+def home():
+    return "<h1>Hello, world!</h1>"  # Returning a simple HTML response

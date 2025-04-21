@@ -1,0 +1,53 @@
+{% extends "layout.html" %}  <!-- Extending the base layout template -->
+{% block content %}  <!-- Start of the content block -->
+    <div class="content-section">
+        <form method="POST" action="">  <!-- Form for resetting the password -->
+            {{ form.hidden_tag()}}  <!-- Hidden CSRF token for security -->
+            <fieldset class="form-group">
+                
+                <legend class="border-bottom mb-4">Reset Password</legend>  <!-- Form title -->
+                
+                    <div class="form-group">
+                        {{ form.password.label(class="form-control-label") }}  <!-- Label for the password field -->
+                            {% if form.password.errors %}  <!-- Check if there are errors in the password field -->
+                               {{ form.password(class="form-control form-control-lg  is-invalid") }}  <!-- Highlight invalid input -->
+                               <div class="invalid-feedback">
+                                   {%  for error in form.password.errors %}  <!-- Loop through password errors -->
+                                       <span> {{ error }} </span>  <!-- Display each error -->
+                                   {% endfor %}
+                               </div>
+                           {% else %}
+                               {{ form.password(class="form-control form-control-lg") }}  <!-- Render valid password input -->
+                           {% endif %}
+                    </div>
+ 
+                    <div class="form-group">
+                        {{ form.confirm_password.label(class="form-control-label") }}  <!-- Label for confirm password field -->
+                            {% if form.confirm_password.errors %}  <!-- Check if there are errors in the confirm password field -->
+                               {{ form.confirm_password(class="form-control form-control-lg  is-invalid") }}  <!-- Highlight invalid input -->
+                               <div class="invalid-feedback">
+                                   {%  for error in form.confirm_password.errors %}  <!-- Loop through confirm password errors -->
+                                       <span> {{ error }} </span>  <!-- Display each error -->
+                                   {% endfor %}
+                               </div>
+                           {% else %}
+                               {{ form.confirm_password(class="form-control form-control-lg") }}  <!-- Render valid confirm password input -->
+                           {% endif %}
+                    </div>
+
+            </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-info")}}  <!-- Submit button -->
+                    </div>
+                    <small class="text-muted ml-2">
+                        <a href="#">Forgot Password</a>  <!-- Link for forgotten password -->
+                    </small>
+        </form>
+    </div>
+    
+    <div class="border-top pt-3">
+        <small text-muted>
+            Need an account? <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up Now</a>  <!-- Link to registration page -->
+        </small>
+    </div>
+{% endblock content %}  <!-- End of the content block -->

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}  <!-- Extends the base layout template -->
+{% block content %}  <!-- Start of the content block -->
+    <div class="content-section">
+        <form method="POST" action="">  <!-- Form submission with POST method -->
+        {{ form.hidden_tag()}}  <!-- CSRF protection hidden tag -->
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>  <!-- Form legend -->
+
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label") }}  <!-- Label for the title field -->
+                        {% if form.title.errors %}  <!-- Check for errors in the title field -->
+                           {{ form.title(class="form-control form-control-lg  is-invalid") }}  <!-- Title field with error styling -->
+                           <div class="invalid-feedback">
+                               {%  for error in form.title.errors %}  <!-- Loop through title field errors -->
+                                   <span> {{ error }} </span>  <!-- Display each error -->
+                               {% endfor %}
+                           </div>
+                       {% else %}
+                           {{ form.title(class="form-control form-control-lg") }}  <!-- Title field without errors -->
+                       {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.content.label(class="form-control-label") }}  <!-- Label for the content field -->
+                    {% if form.content.errors %}  <!-- Check for errors in the content field -->
+                    {{ form.content(class="form-control form-control-lg  is-invalid") }}  <!-- Content field with error styling -->
+                    <div class="invalid-feedback">
+                        {%  for error in form.content.errors %}  <!-- Loop through content field errors -->
+                            <span> {{ error }} </span>  <!-- Display each error -->
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.content(class="form-control form-control-lg") }}  <!-- Content field without errors -->
+                {% endif %}
+                </div>
+        </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info")}}  <!-- Submit button -->
+                </div>
+        </form>
+    </div>
+{% endblock content %}  <!-- End of the content block -->
