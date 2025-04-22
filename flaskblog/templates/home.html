@@ -1,7 +1,7 @@
 {% extends "layout.html" %}  <!-- Extends the base layout template -->
 {% block content %}  <!-- Start of the content block -->
   {% for post in posts.items %}  <!-- Loop through each post in the paginated posts -->
-    <article class="media content-section">
+  <article class="media content-section">
     <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">  <!-- Display author's profile picture -->
     <div class ="media-body">
       <div class = "article-metadata">

@@ -17,7 +17,11 @@ class Config:
         MAIL_USE_SSL (bool): Enables Secure Sockets Layer (SSL) for email communication.
     """
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'default_secret_key'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI') or 'sqlite:///site.db'
+    database_url = os.environ.get('DATABASE_URL')
+    if database_url and database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+    SQLALCHEMY_DATABASE_URI =  SQLALCHEMY_DATABASE_URI = database_url or 'sqlite:///site.db'
     MAIL_SERVER='sandbox.smtp.mailtrap.io'
     MAIL_PORT = 2525
     MAIL_USERNAME = '2eeb55aa8cf259'
